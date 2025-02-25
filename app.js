@@ -25,7 +25,7 @@ app.get('/campgrounds', async (req, res) => {
 });
 
 app.get('/campgrounds/:id', async (req, res) => {
-  const campground = await Campground.findById(req.params.id);
+  const campground = await Campground.findById(req.params.id); //error handling missing
   res.render('campgrounds/show', { campground });
 });
 
