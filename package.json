@@ -7,11 +7,20 @@
   },
   "author": "",
   "license": "ISC",
-  "description": "",
   "dependencies": {
     "ejs": "^3.1.10",
     "express": "^4.21.2",
     "mongoose": "^8.10.1",
     "nodemon": "^3.1.9"
-  }
+  },
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/LasnM/YelpCamp.git"
+  },
+  "bugs": {
+    "url": "https://github.com/LasnM/YelpCamp/issues"
+  },
+  "homepage": "https://github.com/LasnM/YelpCamp#readme",
+  "description": ""
 }
