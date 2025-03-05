@@ -44,7 +44,7 @@ app.post('/campgrounds', catchAsync(async (req, res, next) => {
 }));
 
 app.get('/campgrounds/:id', catchAsync(async (req, res) => {
-  const campground = await Campground.findById(req.params.id); //error handling missing
+  const campground = await Campground.findById(req.params.id); 
   res.render('campgrounds/show', { campground });
 }));
 
@@ -72,8 +72,9 @@ app.all(/(.*)/, (req, res, next) => {
 });
 
 app.use((err, req, res, next) => {
-  const {statusCode = 500, message = 'Something went wrong'} = err;
-  res.status(statusCode).send(message);
+  const {statusCode = 500} = err;
+  if(!err.message) err.message = 'Something went wrong!';
+  res.status(statusCode).render('error', { err });
 });
 
 app.listen(3000, () => {
