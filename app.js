@@ -1,7 +1,6 @@
 const express = require('express');
 const app = express();
 const path = require('path');
-const Joi = require('joi');
 const { campgroundSchema } = require('./schemas.js');
 const mongoose = require('mongoose');
 const Campground = require('./models/campground');
