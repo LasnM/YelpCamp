@@ -57,6 +57,7 @@ app.put('/campgrounds/:id', async (req, res) => {
 });
 
 app.delete('/campgrounds/:id', async (req, res) => {
+  console.log("Received ID for deletion:", req.params.id);
   const { id } = req.params;
   await Campground.findByIdAndDelete(id);
   res.redirect('/campgrounds');
