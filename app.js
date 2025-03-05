@@ -81,7 +81,6 @@ app.put('/campgrounds/:id', validateCampground, catchAsync(async (req, res) => {
 }));
 
 app.delete('/campgrounds/:id', catchAsync(async (req, res) => {
-  console.log("Received ID for deletion:", req.params.id);
   const { id } = req.params;
   await Campground.findByIdAndDelete(id);
   res.redirect('/campgrounds');
@@ -98,7 +97,7 @@ app.post('/campgrounds/:id/reviews', validateReview, catchAsync(async (req, res)
 
 app.delete('/campgrounds/:id/reviews/:reviewId', catchAsync(async (req, res) => {
   const { id, reviewId } = req.params;
-  await Campground.findByIdAndUpdate(id, { $pull: { reviews: reviewId } });
+  await Campground.findByIdAndUpdate(id, { $pull: { reviews: reviewId } }); //deleting the reference to the review
   await Review.findByIdAndDelete(reviewId);
   res.redirect(`/campgrounds/${id}`);
 }));
