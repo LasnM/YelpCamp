@@ -42,6 +42,11 @@ const sessionConfig = {
 app.use(session(sessionConfig));
 app.use(flash());
 
+//flash middleware
+app.use((req, res, next) => {
+  res.locals.success = req.flash('success');
+  next();
+})
 
 app.use('/campgrounds', campgrounds); //using campgrounds router for endpoint mapping
 app.use('/campgrounds/:id/reviews', reviews); //using reviews router for endpoint mapping
