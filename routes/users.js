@@ -7,4 +7,12 @@ router.get('/register', (req, res) => {
     res.render('users/register');
 });
 
+router.post('/register', catchAsync(async (req, res) => {
+    const { email, username, password } = req.body;
+    const user = new User({ email, username});
+    await User.register(user, password);
+    req.flash('success', 'Welcome to Yelp Camp');
+    res.redirect('/campgrounds');
+}));
+
 module.exports = router;
