@@ -5,9 +5,12 @@ const mongoose = require('mongoose');
 const ExpressError = require('./utils/ExpressError');
 const methodOverride = require('method-override');
 const ejsMate = require('ejs-mate');
+const session = require('express-session');
+const flash = require('connect-flash');
 
 const campgrounds = require('./routes/campgrounds');
 const reviews = require('./routes/reviews');
+const { Http2ServerRequest } = require('http2');
 
 mongoose.connect('mongodb://localhost:27017/yelp-camp');
 
@@ -24,6 +27,21 @@ app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride('_method'));
 app.use(express.static(path.join(__dirname, 'public')));
 app.engine('ejs', ejsMate);
+
+const sessionConfig = {
+  secret: 'testsecret',
+  resave: false,
+  saveUninitialized: true,
+  cookie: {
+    expires: Date.now() + 1000 * 60 * 60 * 24 * 7, //expires in a week, time in milliseconds
+    maxAge: 1000 * 60 * 60 * 24 * 7,
+    httpOnly: true //security measure to prevent client side javascript from accessing the cookie
+  }
+}
+
+app.use(session(sessionConfig));
+app.use(flash());
+
 
 app.use('/campgrounds', campgrounds); //using campgrounds router for endpoint mapping
 app.use('/campgrounds/:id/reviews', reviews); //using reviews router for endpoint mapping
