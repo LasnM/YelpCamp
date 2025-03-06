@@ -1,5 +1,5 @@
 const express = require('express');
-const router = express.Router({ mergeParams: true });
+const router = express.Router({ mergeParams: true }); //mergeParams is set to true to allow access to the id parameter from the app.use() method in app.js
 const { reviewSchema } = require('../schemas.js');
 const catchAsync = require('../utils/catchAsync');
 const Review = require('../models/review');
