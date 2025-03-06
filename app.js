@@ -15,7 +15,6 @@ const User = require('./models/user');
 const campgroundsRoutes = require('./routes/campgrounds');
 const reviewsRoutes = require('./routes/reviews');
 const usersRoutes = require('./routes/users');
-const { Http2ServerRequest } = require('http2');
 
 mongoose.connect('mongodb://localhost:27017/yelp-camp');
 
