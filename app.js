@@ -7,6 +7,10 @@ const methodOverride = require('method-override');
 const ejsMate = require('ejs-mate');
 const session = require('express-session');
 const flash = require('connect-flash');
+const passport = require('passport');
+const LocalStrategy = require('passport-local');  
+const User = require('./models/user');  
+
 
 const campgrounds = require('./routes/campgrounds');
 const reviews = require('./routes/reviews');
@@ -42,12 +46,20 @@ const sessionConfig = {
 app.use(session(sessionConfig));
 app.use(flash());
 
+//see passport documentation for more info
+app.use(passport.initialize());
+app.use(passport.session()); //needs to be after session
+passport.use(new LocalStrategy(User.authenticate())); //using local strategy for authentication 
+
+passport.serializeUser(User.serializeUser()); //how to store a user in a session
+passport.deserializeUser(User.deserializeUser()); //how to get a user out of a session
+
 //flash middleware
 app.use((req, res, next) => {
   res.locals.success = req.flash('success');
   res.locals.error = req.flash('error');
   next();
-})
+});
 
 app.use('/campgrounds', campgrounds); //using campgrounds router for endpoint mapping
 app.use('/campgrounds/:id/reviews', reviews); //using reviews router for endpoint mapping
