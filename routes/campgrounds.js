@@ -27,13 +27,14 @@ router.get('/new', isLoggedIn, (req, res) => { //order is important here when ro
   
 router.post('/', isLoggedIn, validateCampground, catchAsync(async (req, res, next) => {  
     const campground = new Campground(req.body.campground);
+    campground.author = req.user._id; //saving user to the campgrounds
     await campground.save();
     req.flash('success', 'Successfully made a new campground!');
     res.redirect(`/campgrounds/${campground._id}`);
 }));
   
 router.get('/:id', catchAsync(async (req, res) => {
-    const campground = await Campground.findById(req.params.id).populate('reviews'); 
+    const campground = await Campground.findById(req.params.id).populate('reviews').populate('author'); 
     if(!campground) {
         req.flash('error', 'Cannot find that campground!');
         return res.redirect('/campgrounds'); //need to return, otherwise the show page with the error is rendered
