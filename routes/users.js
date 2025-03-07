@@ -34,6 +34,7 @@ router.post('/login', storeReturnTo, passport.authenticate('local', {failureFlas
     failureRedirect: '/login'}),(req, res) => {
     req.flash('success', 'Welcome back!');
     const redirectUrl = res.locals.returnTo || '/campgrounds';
+    delete req.session.returnTo;
     res.redirect(redirectUrl);
 });
 
