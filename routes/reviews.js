@@ -8,6 +8,7 @@ const { validateReview, isLoggedIn, isAuthor } = require('../middleware');
 router.post('/', validateReview, isLoggedIn, catchAsync(async (req, res) => {
   const campground = await Campground.findById(req.params.id);
   const review = new Review(req.body.review);
+  review.author = req.user._id; //adding the author to the review
   campground.reviews.push(review);
   await review.save();
   await campground.save();
